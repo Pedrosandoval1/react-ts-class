@@ -8,24 +8,41 @@ import './style.css';
 const Form = () => {
   const [valor1, setValor1] = useState('');
   const [valor2, setValor2] = useState('');
+// se agregan valores para el useState, es como poner un valor, depsu+es eñ setValor1 es para ir agregando, como un evaluador, después se agrega ese trozo de jsonplacenholder que es fake para poder mostrar el title y body, luego al form agregamos el onsubmit con onSubmit={(va1)=> sendForm(va1)}> para poder valuar el form.
+  const sendForm = (va1)=>{
+    va1.preventDefault()
+    fetch( 'https://jsonplaceholder.typicode.com/posts',{
+    method: 'POST',
+    body: JSON.stringify({
+      title: valor1,
+      body: valor2,
+      userId: 1,
+    }),
+     headers:{"content-type": "application/json; charset=UTF-8"
+    }
+    }) 
+    .then(Response => Response.json())
+    .then(json => console.log(json)) 
+  }
+  
   return (
-    <form>
+    <form onSubmit={(va1)=> sendForm(va1)}>
       <div>
-        <label for="title">Title {valor2} </label>
+        <label htmlFor="title">Title  </label>
         <br />
         <input type="text" id="title" onChange={ (va1) => setValor2(va1.target.value)}/>
       </div>
       <div>
-        <label for="body" >Publicación {valor1}</label>
+        <label htmlFor="body" >Publicación </label>
         <br />
-        <textarea id="body" onChange= {(va) => setValor1(va.target.value)} ></textarea>
+        <textarea id="body" onChange= {(va1) => setValor1(va1.target.value)} ></textarea>
       </div>
       <br/>
-      <input type="button" value="enviar" onClick = {()=> console.log(valor1, valor2)}/>
+      <input type="submit" value="enviar" />
     </form>
   );
 };
-
+ 
 //fin
 
 //inicio
